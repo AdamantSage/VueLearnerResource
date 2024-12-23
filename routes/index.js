@@ -14,13 +14,12 @@ router.get('/', async (req, res) => {
             'SELECT * FROM bursaries'
         );
 
-        // Pass resources and bursaries to the view, including searchOptions without displaying search UI in index
-        const searchOptions = req.query.name || ""; // This will be passed but not used for search UI in index
+        // Render the view and pass data to the EJS template
+        res.render('index', { resources, bursaries });
 
-        res.render('dashboard/index', { resources, bursaries, searchOptions });
     } catch (err) {
         console.error("Error fetching data:", err.message);
-        res.status(500).send("An error occurred while loading the dashboard page.");
+        res.status(500).send("An error occurred while fetching data.");
     }
 });
 
