@@ -5,7 +5,8 @@ const promisePool = require("./models/db");
 
 const indexRouter = require('./routes/index');
 const dashRouter = require('./routes/dashboard');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const bursRouter = require('./routes/bursaries');
 
 // Set view engine
 app.set('view engine', 'ejs');
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({limit: '10mb', extended: false }))
 // Routes
 app.use('/', indexRouter);
 app.use('/dashboard', dashRouter); // Dashboard route
+app.use('/bursaries', bursRouter);
 
 // Test DB connection
 const testDBConnection = async () => {

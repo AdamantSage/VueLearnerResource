@@ -3,7 +3,7 @@ const router = express.Router();
 const promisePool = require("../models/db");
 
 
-//get all info on dashboard
+//get all info on dashboard/video
 router.get('/', async (req,res) => {
 
     let searchOptions = "SELECT * FROM resources";
@@ -30,7 +30,8 @@ router.get('/', async (req,res) => {
    }
 });
 
-//new resource, video/bursary info
+//new resource, video
+//adds them to the database, but this must be for admin or me as the creator
 router.get('/new', async (req, res) => {
     try {
         // Fetch resources or any other necessary data for the form

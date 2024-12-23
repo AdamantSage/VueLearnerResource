@@ -1,1 +1,58 @@
-Middle
+<h2>Recently Added</h2>
+
+<div>
+    <% bursaries.forEach(bursary => { %>
+        <div>
+            <div><%= bursary.title %></div>
+            <!-- Check if bursary has image data -->
+            <% if (bursary.coverImageData) { %>
+                <img height="150" width="150" 
+                     src="data:<%= bursary.contentType %>;base64,<%= bursary.coverImageData.toString('base64') %>" 
+                     alt="<%= bursary.title %>">
+            <% } else { %>
+                <p>No cover image available</p>
+            <% } %>
+            <div><%= bursary.description %></div>
+            <div><%= bursary.link %></div>
+            <br>
+        </div>
+    <% }) %>
+</div>
+
+<h1>Bursaries</h1>
+
+<form action="/bursaries" method="GET">
+    <h2>Search Bursaries</h2>
+    <label>Title</label>
+    <input type="text" name="title" value="<%= searchOptions.title %>">
+    <button type="submit">Search</button>
+</form>
+
+<br>
+<!-- Looping through all bursaries -->
+<div>
+    <% bursaries.forEach(bursary => { %>
+        <div>
+            <div><%= bursary.title %></div>
+            <!-- Check if bursary has image data -->
+            <% if (bursary.coverImageData) { %>
+                <img height="150" width="150" 
+                     src="data:<%= bursary.contentType %>;base64,<%= bursary.coverImageData.toString('base64') %>" 
+                     alt="<%= bursary.title %>">
+            <% } else { %>
+                <p>No cover image available</p>
+            <% } %>
+            <div><%= bursary.description %></div>
+            <div><%= bursary.link %></div>
+            <br>
+        </div>
+    <% }) %>
+</div>
+
+<!--looping through all resources here-->
+<%resources.forEach(resources => {%>
+    <div><%= resources.title %></div>
+    <div><%= resources.link %></div>
+    <!-- add descrption here-->
+    <% })%>
+    

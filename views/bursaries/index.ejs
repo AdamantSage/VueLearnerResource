@@ -1,0 +1,31 @@
+<h1>Bursaries</h1>
+
+<form action="/bursaries" method="GET">
+    <h2>Search Bursaries</h2>
+    <label>Title</label>
+    <input type="text" name="title" value="<%= searchOptions.title || '' %>">
+    <button type="submit">Search</button>
+</form>
+
+<br>
+<!-- Display all bursaries -->
+<div>
+    <% bursaries.forEach(bursary => { %>
+        <div>
+            <h3><%= bursary.title %></h3>
+            <!-- Display the image if it exists -->
+            <% if (bursary.coverImageData) { %>
+                <img 
+                    src="data:<%= bursary.contentType %>;base64,<%= bursary.coverImageData %>" 
+                    alt="<%= bursary.title %>" 
+                    height="150" 
+                    width="150">
+            <% } else { %>
+                <p>No cover image available</p>
+            <% } %>
+            <p>Description: <%= bursary.description %></p>
+            <p>Link: <a href="<%= bursary.link %>" target="_blank"><%= bursary.link %></a></p>
+        </div>
+        <hr>
+    <% }) %>
+</div>
