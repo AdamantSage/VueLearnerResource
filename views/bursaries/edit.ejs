@@ -1,0 +1,11 @@
+<h1>Edit Bursary</h1>
+<form action="/bursaries/<%= bursary.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+
+<%- include('form_fields') %>
+
+<br><br>
+
+<a href="/bursaries/<%= bursary.id %>">Cancel</a>
+<button type="submit">Update</button>
+ 
+</form>

@@ -1,22 +1,21 @@
 <div>
-<label>Cover</label>
-<!-- File input to upload an image -->
-<input type="file" name="cover">
+    <label for="cover">Cover Image</label>
+    <input type="file" name="cover" id="cover" class="filepond">
 </div>
 <br><br>
 
 
 <label>Title</label>
-<input type="text" name="title" value="<%= bursaries.title %>">
+<input type="text" name="title" value="<%= bursary.title %>">
 <br><br>
 
 <div>
 <label>Description</label>
-<textarea name="description"><%= bursaries.description %> </textarea>
+<textarea name="description"><%= bursary.description %> </textarea>
 <br><br>
 </div>
 
 <label>Link</label>
-<input type="text" name="link" value="<%= bursaries.link %>">
+<input type="text" name="link" value="<%= bursary.link %>">
 <br><br>
 

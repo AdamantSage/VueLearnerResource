@@ -11,7 +11,8 @@
 <br>
 <!--looping through all resources here-->
 <%resources.forEach(resources => {%>
+    <a href="/dashboard/<%= resources.id %>">
 <div><%= resources.title %></div>
-<div><%= resources.link %></div>
+<a href="/dashboard/<%= resources.id %>"></a><div><%= resources.link %></div></a>
 <!-- add descrption here-->
 <% })%>

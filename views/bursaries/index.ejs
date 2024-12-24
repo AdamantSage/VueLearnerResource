@@ -11,9 +11,8 @@
 <!-- Display all bursaries -->
 <div>
     <% bursaries.forEach(bursary => { %>
-        <div>
-            <h3><%= bursary.title %></h3>
-            <!-- Display the image if it exists -->
+        <div class="bursary-card">
+            <h3><%= bursary.title || 'Untitled Bursary' %></h3>
             <% if (bursary.coverImageData) { %>
                 <img 
                     src="data:<%= bursary.contentType %>;base64,<%= bursary.coverImageData %>" 
@@ -23,9 +22,18 @@
             <% } else { %>
                 <p>No cover image available</p>
             <% } %>
-            <p>Description: <%= bursary.description %></p>
-            <p>Link: <a href="<%= bursary.link %>" target="_blank"><%= bursary.link %></a></p>
+            <p>Description: <%= bursary.description || 'No description available' %></p>
+            <p>Link: 
+                <% if (bursary.link) { %>
+                    <a href="<%= bursary.link %>" target="_blank"><%= bursary.link %></a>
+                <% } else { %>
+                    No link provided
+                <% } %>
+            </p>
+            <a href="/bursaries/<%= bursary.id %>">View</a>
+            <a href="/bursaries/<%= bursary.id %>/edit">Edit</a>
+            <%- include('../partials/deleteForm', {url: `/bursaries/${bursary.id}`}) %>
         </div>
-        <hr>
+        <br>
     <% }) %>
 </div>

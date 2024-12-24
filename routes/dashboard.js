@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const promisePool = require("../models/db");
+const {findVidById} = require('../models/vidModel');
 
 
 //get all info on dashboard/video
@@ -70,5 +71,85 @@ router.post('/', async (req, res) =>{
         res.status(500).send('Error inserting resources');
        }
 })
+
+//for editing video information and link
+router.get('/:id/edit', async (req, res) => {
+
+    try{
+        const resourceID = req.params.id;
+
+        const [resource] = await promisePool.execute('SELECT * FROM resources WHERE id = ?', [resourceID]);
+
+        if(resource.length ===0){
+            return res.status(404).send('Resource not found');
+        }
+
+        res.render('./dashboard/editResource', {resource:resource[0]});
+    }catch(err){
+        console.error("Error updating resources: ", err.message);
+        res.status(500).send('Error updating resources');
+       }
+
+});
+
+router.put('/:id/edit', async (req, res) => {
+    try {
+        const resourceID = req.params.id;
+        console.log('PUT route hit for ID:', resourceID);
+
+        // Get current resource from the database
+        const [resources] = await promisePool.execute('SELECT * FROM resources WHERE id = ?', [resourceID]);
+        const existingResource = resources[0];
+
+        if (!existingResource) {
+            return res.status(404).send('Resource not found');
+        }
+
+        // Use existing values if no new value is provided
+        const { title, type, link, created_at } = req.body;
+        const updatedTitle = title || existingResource.title;
+        const updatedType = type || existingResource.type;
+        const updatedLink = link || existingResource.link;
+        const updatedCreatedAt = created_at || existingResource.created_at;
+
+        // Update the resource in the database
+        const result = await promisePool.execute(
+            'UPDATE resources SET title = ?, type = ?, link = ?, created_at = ? WHERE id = ?',
+            [updatedTitle, updatedType, updatedLink, updatedCreatedAt, resourceID]
+        );
+
+        console.log('Resource updated:', result);
+        res.redirect('/dashboard'); // Redirect to the dashboard after editing
+    } catch (err) {
+        console.error('Error updating resource:', err.message);
+        res.status(500).send('Error updating resource');
+    }
+});
+
+
+// to show videos individually by loading them to a show page using title, but backend uses id gotten from title
+
+router.get('/:id', async (req,res) =>{
+
+    try{
+        const videoId = req.params.id;
+        console.log("Video ID from params:", videoId); // Log the bursary ID
+        const video = await findVidById(videoId);
+
+        if(video){
+            res.render('dashboard/show', { video});
+        }
+        else{
+            res.status(404).send('Video not found');
+        }
+
+
+    }catch (err) {
+        console.error("Error fetching resources/video: ", err.message);
+        res.status(500).send('Error fetching resources/video');
+    }
+
+});
+
 
 module.exports = router

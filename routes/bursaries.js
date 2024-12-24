@@ -8,6 +8,7 @@ const imageMimeTypes =['image/jpeg','image/png','image/gif']
 const fs = require('fs');
 
 const { promisify } = require('util');
+const {findBursById} = require('../models/bursaryModel');
 
 // Create a promisified version of fs.readFile
 const readFileAsync = promisify(fs.readFile);
@@ -107,5 +108,103 @@ router.post('/', upload.single('cover'), async (req, res) => {
         res.status(500).send('Error inserting into bursaries');
     }
 });
+
+
+//geting bursary by id
+router.get('/:id', (req, res) => {
+    res.send('Show Bursaries '+ req.params.id);
+});
+
+
+//getting bursary by id for editing
+router.get('/:id/edit', async (req, res) => {
+    try {
+        const bursaryId = req.params.id;
+        console.log("Bursary ID from params:", bursaryId); // Log the bursary ID
+
+        const bursary = await findBursById(bursaryId);
+        
+        if (bursary) {
+            res.render('bursaries/edit', { bursary }); // Pass singular bursary
+        } else {
+            res.status(404).send('Bursary not found');
+        }
+    } catch (err) {
+        console.error("Error fetching bursary:", err.message);
+        res.status(500).send('Error fetching bursary');
+    }
+});
+
+
+router.put('/:id', upload.single('cover'), async (req, res) => {
+    try {
+        const bursaryId = req.params.id;
+        const { title, description, link } = req.body; // Get data from the body
+        console.log("Bursary ID from params:", bursaryId); // Log the bursary ID
+
+        // Fetch the existing bursary
+        const bursary = await findBursById(bursaryId);
+        if (!bursary) {
+            return res.status(404).send('Bursary not found');
+        }
+
+        // Set default values to the existing bursary data
+        let updatedTitle = title || bursary.title;
+        let updatedDescription = description || bursary.description;
+        let updatedLink = link || bursary.link;
+        let updatedCover = bursary.cover; // Default to the existing cover image
+
+        // If a new file is uploaded, update the cover
+        if (req.file) {
+            if (!imageMimeTypes.includes(req.file.mimetype)) {
+                return res.status(400).send('Invalid file type. Only JPEG, PNG, and GIF are allowed.');
+            }
+            updatedCover = await readFileAsync(req.file.path); // Update cover image
+        }
+
+        // Update bursary in the database
+        await promisePool.execute(
+            'UPDATE bursaries SET title = ?, description = ?, link = ?, cover = ? WHERE id = ?',
+            [updatedTitle, updatedDescription, updatedLink, updatedCover, bursaryId]
+        );
+
+        // If a new file was uploaded, delete the old one
+        if (req.file) {
+            fs.unlinkSync(req.file.path);
+        }
+
+        res.redirect('/bursaries');
+    } catch (err) {
+        console.error("Error updating bursary:", err.message);
+        res.status(500).send('Error updating bursary');
+    }
+});
+
+
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const bursaryId = req.params.id;  // Get the bursary ID from the URL parameters
+
+        // Check if the bursary exists
+        const [rows] = await promisePool.execute('SELECT * FROM bursaries WHERE id = ?', [bursaryId]);
+        
+        if (rows.length === 0) {
+            return res.status(404).send('Bursary not found');
+        }
+
+        // Delete the bursary
+        await promisePool.execute('DELETE FROM bursaries WHERE id = ?', [bursaryId]);
+
+        // Send success response
+        res.status(200).send('Bursary deleted successfully');
+        res.redirect('/bursaries');
+
+    } catch (err) {
+        console.error("Error deleting bursary:", err.message);
+        res.status(500).send('Error deleting bursary');
+    }
+});
+
 
 module.exports = router;

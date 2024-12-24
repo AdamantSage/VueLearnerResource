@@ -1,0 +1,43 @@
+<h1>Show and Videos</h1>
+<h2> <%= video.title %></h2>
+
+<div class="video-container">
+    <iframe width="560" height="315" 
+        src="https://www.youtube.com/embed/<%= video.link.split('v=')[1].split('&')[0] %>" 
+        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+    </iframe>
+</div>
+
+<script>
+    // Get modal and open button
+    const modal = document.getElementById("videoModal");
+    const openButton = document.getElementById("openVideoModal");
+    const closeButton = document.getElementsByClassName("close")[0];
+    const videoFrame = document.getElementById("videoFrame");
+
+    // Open the modal
+    openButton.onclick = function() {
+        modal.style.display = "block";
+        // Set the video source dynamically based on the YouTube link
+        videoFrame.src = "https://www.youtube.com/embed/<%= video.link.split('v=')[1].split('&')[0] %>";
+    }
+
+    // Close the modal
+    closeButton.onclick = function() {
+        modal.style.display = "none";
+        videoFrame.src = ""; // Stop the video when the modal is closed
+    }
+
+    // Close the modal if user clicks outside of it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            videoFrame.src = "";
+        }
+    }
+</script>
+
+<a href="/dashboard/<%= video.id %>/edit">Edit</a>
+<%- include('../partials/deleteForm', { url: `/dashboard/${video.id}` }) %>
+
