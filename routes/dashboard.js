@@ -92,15 +92,15 @@ router.get('/:id/edit', async (req, res) => {
 
 });
 
+
+//for finding video and updating it
 router.put('/:id/edit', async (req, res) => {
     try {
         const resourceID = req.params.id;
         console.log('PUT route hit for ID:', resourceID);
 
-        // Get current resource from the database
-        const [resources] = await promisePool.execute('SELECT * FROM resources WHERE id = ?', [resourceID]);
-        const existingResource = resources[0];
-
+        // Get current resource from the database using the findVidById function
+        const existingResource = await findVidById(resourceID);
         if (!existingResource) {
             return res.status(404).send('Resource not found');
         }
@@ -151,5 +151,29 @@ router.get('/:id', async (req,res) =>{
 
 });
 
+
+
+//for deleting 
+router.delete('/:id', async (req, res) => {
+    try {
+        const videoId = req.params.id;  // Get the bursary ID from the URL parameters
+
+        // Check if the bursary exists
+        const [rows] = await promisePool.execute('SELECT * FROM resources WHERE id = ?', [videoId]);
+        
+        if (rows.length === 0) {
+            return res.status(404).send('video not found');
+        }
+
+        // Delete the bursary
+        await promisePool.execute('DELETE FROM resources WHERE id = ?', [videoId]);
+
+        res.redirect('/dashboard');
+
+    } catch (err) {
+        console.error("Error deleting video:", err.message);
+        res.status(500).send('Error deleting video');
+    }
+});
 
 module.exports = router
