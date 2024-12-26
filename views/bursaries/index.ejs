@@ -1,7 +1,7 @@
-<h1>Bursaries</h1>
+<h2 class="page-header">Bursaries</h2>
 
 <form action="/bursaries" method="GET">
-    <h2>Search Bursaries</h2>
+    <h2 class="page-header">Search Bursaries</h2>
     <label>Title</label>
     <input type="text" name="title" value="<%= searchOptions.title || '' %>">
     <button type="submit">Search</button>
@@ -30,9 +30,12 @@
                     No link provided
                 <% } %>
             </p>
-            <a href="/bursaries/<%= bursary.id %>">View</a>
-            <a href="/bursaries/<%= bursary.id %>/edit">Edit</a>
-            <%- include('../partials/deleteForm', {url: `/bursaries/${bursary.id}`}) %>
+
+            <div class="btn-row"><a class="btn btn-primary" href="/bursaries/<%= bursary.id %>">View</a>
+                <a class="btn btn-primary" href="/bursaries/<%= bursary.id %>/edit">Edit</a>
+                <%- include('../partials/deleteForm', {url: `/bursaries/${bursary.id}`}) %>
+            </div>
+            
         </div>
         <br>
     <% }) %>
