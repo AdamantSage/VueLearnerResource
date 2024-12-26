@@ -1,11 +1,12 @@
 <h2 class="page-header">Add New Bursary</h2>
 <form action="/bursaries" method="POST" enctype="multipart/form-data">
 
-<%- include('form_fields', {bursary: {} }) %>
+    <%- include('form_fields', {bursary: {} }) %>
 
-<br><br>
+    <div class="form-row btn-row">
+        <br><br>
 
-<a href="/bursaries">Cancel</a>
-<button type="submit">Create</button>
- 
+        <a class="btn btn-danger" href="/bursaries">Cancel</a>
+        <button class="btn btn-primary"  type="submit">Create</button>
+    </div>
 </form>

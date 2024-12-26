@@ -1,17 +1,24 @@
-<label>Title</label>
-<input type="text" name="title" value="<%= resources.title %>">
-<br><br>
+<div class="form-item">
+    <label>Title</label>
+    <input type="text" name="title" value="<%= resources.title %>" required>
+    <br><br>
+</div>
+<div class="form-item">
+    <label for="type">Type</label>
+    <select name="type" id="type" required>
+        <option value="Video" <%=resources.type==='Video' ? 'selected' : '' %>>Video</option>
+        <option value="Document" <%=resources.type==='Document' ? 'selected' : '' %>>Document</option>
+    </select>
+    <br><br>
+</div>
 
-<label for="type">Type</label>
-<select name="type" id="type">
-    <option value="Video" <%= resources.type === 'Video' ? 'selected' : '' %>>Video</option>
-    <option value="Document" <%= resources.type === 'Document' ? 'selected' : '' %>>Document</option>
-</select>
-<br><br>
-
-<label>Link</label>
-<input type="text" name="link" value="<%= resources.link %>">
-<br><br>
-
-<label for="created_at">Created at:</label>
-<input type="datetime-local" name="created_at" value="<%= resources.created_at ? resources.created_at.toISOString().slice(0, 16) : '' %>">
+<div class="form-item">
+    <label>Link</label>
+    <input type="text" name="link" value="<%= resources.link %>" required>
+    <br><br>
+</div>
+<div class="form-item">
+    <label for="created_at">Created at:</label>
+    <input type="datetime-local" name="created_at"
+        value="<%= resources.created_at ? resources.created_at.toISOString().slice(0, 16) : '' %>" required>
+</div>

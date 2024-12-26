@@ -25,11 +25,14 @@
     cursor: pointer;
     text-decoration: none;
     text-align:center;
+    justify-content: space-between;
+    
 }
 
 .btn-primary {
     color: var(--color-btn-primary-text);
     background-color: var(--color-btn-primary-background);
+    align-items: flex-start;
 }
 
 .btn-primary:hover {

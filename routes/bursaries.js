@@ -82,6 +82,10 @@ router.get('/new', async (req, res) => {
 router.post('/', upload.single('cover'), async (req, res) => {
     try {
         const { title, description, link } = req.body;
+
+        if (!title || !link || !description) {
+            return res.status(400).send('All fields are required.');
+        }
         
         // Validate file type
         if (req.file && !imageMimeTypes.includes(req.file.mimetype)) {
@@ -107,12 +111,6 @@ router.post('/', upload.single('cover'), async (req, res) => {
         console.error("Error inserting into bursaries", err.message);
         res.status(500).send('Error inserting into bursaries');
     }
-});
-
-
-//geting bursary by id
-router.get('/:id', (req, res) => {
-    res.send('Show Bursaries '+ req.params.id);
 });
 
 
@@ -197,7 +195,6 @@ router.delete('/:id', async (req, res) => {
         await promisePool.execute('DELETE FROM bursaries WHERE id = ?', [bursaryId]);
 
         // Send success response
-        res.status(200).send('Bursary deleted successfully');
         res.redirect('/bursaries');
 
     } catch (err) {

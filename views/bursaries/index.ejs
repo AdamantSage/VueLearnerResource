@@ -1,42 +1,50 @@
 <h2 class="page-header">Bursaries</h2>
 
 <form action="/bursaries" method="GET">
-    <h2 class="page-header">Search Bursaries</h2>
-    <label>Title</label>
-    <input type="text" name="title" value="<%= searchOptions.title || '' %>">
-    <button type="submit">Search</button>
+    <div class="form-row">
+        <div class="form-item">
+            <h2 class="page-header">Search Bursaries</h2>
+            <label>Title</label>
+            <input type="text" name="title" value="<%= searchOptions.title || '' %>">
+        </div>
+    </div>
+    <div class="form-row">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
 </form>
 
 <br>
 <!-- Display all bursaries -->
 <div>
-    <% bursaries.forEach(bursary => { %>
+    <% bursaries.forEach(bursary=> { %>
         <div class="bursary-card">
-            <h3><%= bursary.title || 'Untitled Bursary' %></h3>
+            <h3>
+                <%= bursary.title || 'Untitled Bursary' %>
+            </h3>
             <% if (bursary.coverImageData) { %>
-                <img 
-                    src="data:<%= bursary.contentType %>;base64,<%= bursary.coverImageData %>" 
-                    alt="<%= bursary.title %>" 
-                    height="150" 
-                    width="150">
-            <% } else { %>
-                <p>No cover image available</p>
-            <% } %>
-            <p>Description: <%= bursary.description || 'No description available' %></p>
-            <p>Link: 
-                <% if (bursary.link) { %>
-                    <a href="<%= bursary.link %>" target="_blank"><%= bursary.link %></a>
+                <img src="data:<%= bursary.contentType %>;base64,<%= bursary.coverImageData %>"
+                    alt="<%= bursary.title %>" height="150" width="150">
                 <% } else { %>
-                    No link provided
-                <% } %>
-            </p>
+                    <p>No cover image available</p>
+                    <% } %>
+                        <p>Description: <%= bursary.description || 'No description available' %>
+                        </p>
+                        <p>Link:
+                            <% if (bursary.link) { %>
+                                <a href="<%= bursary.link %>" target="_blank">
+                                    <%= bursary.link %>
+                                </a>
+                                <% } else { %>
+                                    No link provided
+                                    <% } %>
+                        </p>
+                        <div class="form-row form-row-end btn-row">
+                            <a class="btn btn-primary" href="/bursaries/<%= bursary.id %>/edit">Edit</a>
+                            <%- include('../partials/deleteForm', {url: `/bursaries/${bursary.id}`}) %>
+                        </div>
+                        </div>
 
-            <div class="btn-row"><a class="btn btn-primary" href="/bursaries/<%= bursary.id %>">View</a>
-                <a class="btn btn-primary" href="/bursaries/<%= bursary.id %>/edit">Edit</a>
-                <%- include('../partials/deleteForm', {url: `/bursaries/${bursary.id}`}) %>
-            </div>
-            
         </div>
         <br>
-    <% }) %>
+        <% }) %>
 </div>

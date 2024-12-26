@@ -2,17 +2,29 @@
 <p>Welcome to the dashboard!</p>
 
 <form action="/dashboard" method="GET">
-<h2> Search Videos or documents</h2>
-<label>Name</label>
-<input type="text" name="name" value ="<%= searchOptions.name %>">
-<button type="submit">Search</button>
+    <div class="form-row">
+        <div class="form-item">
+            <label>Search Videos or Documents</label>
+            <input type="text" name="name" value="<%= searchOptions.name %>">
+        </div>
+    </div>
+    
+    <div class="form-row">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
 </form>
 
 <br>
 <!--looping through all resources here-->
-<%resources.forEach(resources => {%>
+<%resources.forEach(resources=> {%>
     <a href="/dashboard/<%= resources.id %>">
-<div><%= resources.title %></div>
-<a href="/dashboard/<%= resources.id %>"></a><div><%= resources.link %></div></a>
-<!-- add descrption here-->
-<% })%>
+        <div>
+            <%= resources.title %>
+        </div>
+        <a href="/dashboard/<%= resources.id %>"></a>
+        <div>
+            <%= resources.link %>
+        </div>
+    </a>
+    <!-- add descrption here-->
+    <% })%>
