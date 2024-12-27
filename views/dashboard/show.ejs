@@ -37,7 +37,8 @@
         }
     }
 </script>
-
+<div class="form-row video-buttons">
 <a class="btn btn-primary" href="/dashboard/<%= video.id %>/edit">Edit</a>
 <%- include('../partials/deleteForm', { url: `/dashboard/${video.id}` }) %>
+</div>
 

@@ -1,24 +1,34 @@
 <form action="/dashboard/<%= resource.id %>/edit" method="POST">
     <input type="hidden" name="_method" value="PUT">
-    
-    <label>Title</label>
-    <input type="text" name="title" value="<%= resource.title %>">
-    <br><br>
+    <div class="form-item">
+        <label>Title</label>
+        <input type="text" name="title" value="<%= resource.title %>">
+        <br>
+    </div>
 
-    <label for="type">Type</label>
-    <select name="type" id="type">
-        <option value="Video" <%= resource.type === 'Video' ? 'selected' : '' %>>Video</option>
-        <option value="Document" <%= resource.type === 'Document' ? 'selected' : '' %>>Document</option>
-    </select>
-    <br><br>
+    <div class="form-item">
+        <label for="type">Type</label>
+        <select name="type" id="type">
+            <option value="Video" <%=resource.type==='Video' ? 'selected' : '' %>>Video</option>
+            <option value="Document" <%=resource.type==='Document' ? 'selected' : '' %>>Document</option>
+        </select>
+        <br>
+    </div>
 
-    <label>Link</label>
-    <input type="text" name="link" value="<%= resource.link %>">
-    <br><br>
+    <div class="form-item">
+        <label>Link</label>
+        <input type="text" name="link" value="<%= resource.link %>">
+        <br>
+    </div>
 
-    <label for="created_at">Created at:</label>
-    <input type="datetime-local" name="created_at" value="<%= resource.created_at ? resource.created_at.toISOString().slice(0, 16) : '' %>">
-    <br><br>
+    <div class="form-item">
+        <label for="created_at">Created at:</label>
+        <input type="datetime-local" name="created_at"
+            value="<%= resource.created_at ? resource.created_at.toISOString().slice(0, 16) : '' %>">
+        <br>
+    </div>
 
-    <button type="submit">Update Resource</button>
+    <div class="form-row">
+    <button class="btn btn-primary" type="submit">Update Resource</button>
+        </div>
 </form>

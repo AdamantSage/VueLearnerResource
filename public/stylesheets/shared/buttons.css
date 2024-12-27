@@ -33,6 +33,7 @@
     color: var(--color-btn-primary-text);
     background-color: var(--color-btn-primary-background);
     align-items: flex-start;
+    margin-left:10px;
 }
 
 .btn-primary:hover {
@@ -60,4 +61,18 @@
 
 .btn-row > *:first-child {
     margin-left:0;
+}
+
+.video-buttons{
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    gap: 1rem;
+}
+
+.resource-buttons{
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    padding-left: 10px
 }

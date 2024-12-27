@@ -72,4 +72,5 @@
 .filepond--drop-label{
     color: var(--color-text-light);
     font-size: inherit;
+    margin-top: 20px;
 }

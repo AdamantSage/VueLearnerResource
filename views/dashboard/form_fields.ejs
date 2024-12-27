@@ -1,7 +1,7 @@
 <div class="form-item">
     <label>Title</label>
     <input type="text" name="title" value="<%= resources.title %>" required>
-    <br><br>
+    <br>
 </div>
 <div class="form-item">
     <label for="type">Type</label>
@@ -9,13 +9,13 @@
         <option value="Video" <%=resources.type==='Video' ? 'selected' : '' %>>Video</option>
         <option value="Document" <%=resources.type==='Document' ? 'selected' : '' %>>Document</option>
     </select>
-    <br><br>
+    <br>
 </div>
 
 <div class="form-item">
     <label>Link</label>
     <input type="text" name="link" value="<%= resources.link %>" required>
-    <br><br>
+    <br>
 </div>
 <div class="form-item">
     <label for="created_at">Created at:</label>

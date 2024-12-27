@@ -7,6 +7,9 @@
     <link href="https://cdn.jsdelivr.net/npm/filepond@4.0.0/dist/filepond.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href ="/stylesheets/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css" rel="stylesheet">
+
+    
     <title>VueLearnerResources</title>
 </head>
 <body>
@@ -22,16 +25,39 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/filepond@4.0.0/dist/filepond.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script>
+
 
     <script>
+
+        FilePond.registerPlugin(
+        FilePondPluginImagePreview, 
+        FilePondPluginImageResize,  
+        FilePondPluginFileEncode    
+    );
         // Initialize FilePond for the cover image input
         FilePond.create(document.querySelector('#cover'), {
-            allowImagePreview: true,
-            imagePreviewHeight: 300,
-            imagePreviewWidth: 300,
-            acceptedFileTypes: ['image/*'],
-            maxFileSize: '5MB',
+        allowImagePreview: true,        
+        imagePreviewHeight: 200,        
+        imagePreviewWidth: 200,         
+        acceptedFileTypes: ['image/*'], 
+        maxFileSize: '5MB',             
+        imageResizeTargetWidth: 400,    
+        imageResizeTargetHeight: 400,   
+        fileEncode: true,
         });
     </script>
+
+<style>
+    .filepond--root {
+        width: 150px; /* Adjust the width */
+        height: 150px; /* Height adjusts based on content */
+    }
+    .filepond--panel {
+        height: 200px; /* Adjust panel height */
+    }
+</style>
 </body>
 </html>
