@@ -36,26 +36,34 @@ looping through all resources/videos here
         <br><br>
 
         <div class="video-list">
-       <% resources.forEach(resources => { %>
-    <a href="/dashboard/<%= resources.id %>" class="video-card" target="_blank">
-        <div class="thumbnail-container">
-            <% 
-                let videoId = null;
-                // Check if the link contains 'v=' or 'youtu.be/' to extract the video ID
-                if (resources.link && resources.link.includes('v=')) {
-                    videoId = resources.link.split('v=')[1]?.split('&')[0];
-                } else if (resources.link && resources.link.includes('youtu.be/')) {
-                    videoId = resources.link.split('youtu.be/')[1];
-                }
-            %>
-            <% if (videoId) { %>
-                <img src="https://img.youtube.com/vi/<%= videoId %>/hqdefault.jpg" alt="thumbnail" class="thumbnail">
-            <% } else { %>
-                <p>Thumbnail unavailable</p>
-            <% } %>
-        </div>
-    </a>
-<% }); %>
+            <% resources.forEach(resources => { %>
+                <a href="/dashboard/<%= resources.id %>" class="video-card" target="_blank">
+                    <div class="thumbnail-container">
+                        <% 
+                            let videoId = null;
+                            // Check if the link contains 'v=' or 'youtu.be/' to extract the video ID
+                            if (resources.link && resources.link.includes('v=')) {
+                                videoId = resources.link.split('v=')[1]?.split('&')[0];
+                            } else if (resources.link && resources.link.includes('youtu.be/')) {
+                                videoId = resources.link.split('youtu.be/')[1];
+                            }
+                        %>
+                        
+                        <% if (videoId) { %>
+                            <img src="https://img.youtube.com/vi/<%= videoId %>/hqdefault.jpg" alt="thumbnail" class="thumbnail">
+                        <% } else { %>
+                            <p>Thumbnail unavailable</p>
+                        <% } %>
+            
+                        <!-- Video title and text -->
+                        <div class="video-info">
+                            <h3 class="video-title"><%= resources.title %></h3>
+                            <p class="video-description">Description or additional text goes here.</p>
+                        </div>
+                    </div>
+                </a>
+            <% }); %>
+            
 
 
                     <a href="#" class="video-card">
