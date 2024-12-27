@@ -8,23 +8,164 @@
             <input type="text" name="name" value="<%= searchOptions.name %>">
         </div>
     </div>
-    
+
     <div class="form-row">
         <button class="btn btn-primary" type="submit">Search</button>
     </div>
 </form>
 
 <br>
-<!--looping through all resources here-->
+
+<!--
+looping through all resources/videos here
 <%resources.forEach(resources=> {%>
     <a href="/dashboard/<%= resources.id %>">
         <div>
             <%= resources.title %>
         </div>
-        <a href="/dashboard/<%= resources.id %>"></a>
+    </a>
+    <a>
+        <a href="/dashboard/<%= resources.id %>">click me</a>
         <div>
             <%= resources.link %>
         </div>
     </a>
-    <!-- add descrption here-->
+
     <% })%>
+-->
+        <br><br>
+
+        <div class="video-list">
+       <% resources.forEach(resources => { %>
+    <a href="/dashboard/<%= resources.id %>" class="video-card" target="_blank">
+        <div class="thumbnail-container">
+            <% 
+                let videoId = null;
+                // Check if the link contains 'v=' or 'youtu.be/' to extract the video ID
+                if (resources.link && resources.link.includes('v=')) {
+                    videoId = resources.link.split('v=')[1]?.split('&')[0];
+                } else if (resources.link && resources.link.includes('youtu.be/')) {
+                    videoId = resources.link.split('youtu.be/')[1];
+                }
+            %>
+            <% if (videoId) { %>
+                <img src="https://img.youtube.com/vi/<%= videoId %>/hqdefault.jpg" alt="thumbnail" class="thumbnail">
+            <% } else { %>
+                <p>Thumbnail unavailable</p>
+            <% } %>
+        </div>
+    </a>
+<% }); %>
+
+
+                    <a href="#" class="video-card">
+                        <div class="thumbnail-container">
+                            <img src="https://cdn.shortpixel.ai/spai/q_lossy+w_624+to_webp+ret_img/thumbnailtest.com/wp-content/uploads/2024/04/Copying-the-URL-of-a-thumbnail-2048x1152.webp"
+                                alt="thumbnail" class="thumbnail">
+                        </div>
+
+                        <div class="video-details">
+                            <h2 class="title"> Video Title For youtube here</h2>
+                            <p class="vid-summary">Some small explanation for just cause</p>
+                        </div>
+                    </a>
+                    <a href="#" class="video-card">
+                        <div class="thumbnail-container">
+                            <img src="https://cdn.shortpixel.ai/spai/q_lossy+w_624+to_webp+ret_img/thumbnailtest.com/wp-content/uploads/2024/04/Copying-the-URL-of-a-thumbnail-2048x1152.webp"
+                                alt="thumbnail" class="thumbnail">
+                        </div>
+
+                        <div class="video-details">
+                            <h2 class="title"> Video Title For youtube here</h2>
+                            <p class="vid-summary">Some small explanation for just cause</p>
+                        </div>
+                    </a>
+                    <a href="#" class="video-card">
+                        <div class="thumbnail-container">
+                            <img src="https://cdn.shortpixel.ai/spai/q_lossy+w_624+to_webp+ret_img/thumbnailtest.com/wp-content/uploads/2024/04/Copying-the-URL-of-a-thumbnail-2048x1152.webp"
+                                alt="thumbnail" class="thumbnail">
+                        </div>
+
+                        <div class="video-details">
+                            <h2 class="title"> Video Title For youtube here</h2>
+                            <p class="vid-summary">Some small explanation for just cause</p>
+                        </div>
+                    </a>
+                    <a href="#" class="video-card">
+                        <div class="thumbnail-container">
+                            <img src="https://cdn.shortpixel.ai/spai/q_lossy+w_624+to_webp+ret_img/thumbnailtest.com/wp-content/uploads/2024/04/Copying-the-URL-of-a-thumbnail-2048x1152.webp"
+                                alt="thumbnail" class="thumbnail">
+                        </div>
+
+                        <div class="video-details">
+                            <h2 class="title"> Video Title For youtube here</h2>
+                            <p class="vid-summary">Some small explanation for just cause</p>
+                        </div>
+                    </a>
+                    <a href="#" class="video-card">
+                        <div class="thumbnail-container">
+                            <img src="https://cdn.shortpixel.ai/spai/q_lossy+w_624+to_webp+ret_img/thumbnailtest.com/wp-content/uploads/2024/04/Copying-the-URL-of-a-thumbnail-2048x1152.webp"
+                                alt="thumbnail" class="thumbnail">
+                        </div>
+
+                        <div class="video-details">
+                            <h2 class="title"> Video Title For youtube here</h2>
+                            <p class="vid-summary">Some small explanation for just cause</p>
+                        </div>
+                    </a>
+                    <a href="#" class="video-card">
+                        <div class="thumbnail-container">
+                            <img src="https://cdn.shortpixel.ai/spai/q_lossy+w_624+to_webp+ret_img/thumbnailtest.com/wp-content/uploads/2024/04/Copying-the-URL-of-a-thumbnail-2048x1152.webp"
+                                alt="thumbnail" class="thumbnail">
+                        </div>
+
+                        <div class="video-details">
+                            <h2 class="title"> Video Title For youtube here</h2>
+                            <p class="vid-summary">Some small explanation for just cause</p>
+                        </div>
+                    </a>
+                    <a href="#" class="video-card">
+                        <div class="thumbnail-container">
+                            <img src="https://cdn.shortpixel.ai/spai/q_lossy+w_624+to_webp+ret_img/thumbnailtest.com/wp-content/uploads/2024/04/Copying-the-URL-of-a-thumbnail-2048x1152.webp"
+                                alt="thumbnail" class="thumbnail">
+                        </div>
+
+                        <div class="video-details">
+                            <h2 class="title"> Video Title For youtube here</h2>
+                            <p class="vid-summary">Some small explanation for just cause</p>
+                        </div>
+                    </a>
+                    <a href="#" class="video-card">
+                        <div class="thumbnail-container">
+                            <img src="https://cdn.shortpixel.ai/spai/q_lossy+w_624+to_webp+ret_img/thumbnailtest.com/wp-content/uploads/2024/04/Copying-the-URL-of-a-thumbnail-2048x1152.webp"
+                                alt="thumbnail" class="thumbnail">
+                        </div>
+
+                        <div class="video-details">
+                            <h2 class="title"> Video Title For youtube here</h2>
+                            <p class="vid-summary">Some small explanation for just cause</p>
+                        </div>
+                    </a>
+                    <a href="#" class="video-card">
+                        <div class="thumbnail-container">
+                            <img src="https://cdn.shortpixel.ai/spai/q_lossy+w_624+to_webp+ret_img/thumbnailtest.com/wp-content/uploads/2024/04/Copying-the-URL-of-a-thumbnail-2048x1152.webp"
+                                alt="thumbnail" class="thumbnail">
+                        </div>
+
+                        <div class="video-details">
+                            <h2 class="title"> Video Title For youtube here</h2>
+                            <p class="vid-summary">Some small explanation for just cause</p>
+                        </div>
+                    </a>
+                    <a href="#" class="video-card">
+                        <div class="thumbnail-container">
+                            <img src="https://cdn.shortpixel.ai/spai/q_lossy+w_624+to_webp+ret_img/thumbnailtest.com/wp-content/uploads/2024/04/Copying-the-URL-of-a-thumbnail-2048x1152.webp"
+                                alt="thumbnail" class="thumbnail">
+                        </div>
+
+                        <div class="video-details">
+                            <h2 class="title"> Video Title For youtube here</h2>
+                            <p class="vid-summary">Some small explanation for just cause</p>
+                        </div>
+                    </a>
+        </div>

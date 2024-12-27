@@ -1,0 +1,145 @@
+:root {
+    --sidebar-width: 250px;
+    --navbar-height: 60px;
+    --color-navbar-bg: #005f73;
+    --color-sidebar-bg: #0a9396;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--navbar-height);
+    background-color: var(--color-navbar-bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-title {
+    color: var(--color-text-light);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.header-links {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+.header-links a {
+    color: var(--color-text-light);
+    text-decoration: none;
+}
+
+
+.header-links a:hover {
+    text-decoration: underline;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -var(--sidebar-width);
+    width: var(--sidebar-width);
+    height: 100%;
+    background-color: var(--color-sidebar-bg);
+    color: var(--color-text-light);
+    transition: left 0.3s ease-in-out;
+    z-index: 999;
+    overflow-y: auto;
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-links a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 15px;
+}
+
+.sidebar-links a:hover {
+    background-color: #94d2bd;
+}
+
+.close-sidebar {
+    background: none;
+    border: none;
+    color:white;
+    font-size: 1.5rem;
+    padding: 15px;
+    cursor: pointer;
+    text-align: right;
+    width: 100%;
+}
+
+.close-sidebar:hover{
+    color: #ff0000; /* Change text color to red on hover */
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+    display: block; /* Show on smaller screens by default */
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background-color: var(--color-navbar-bg);
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    padding: 10px;
+    z-index: 1001;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.sidebar-toggle:hover{
+    color: #ff0000; /* Change text color to red on hover */
+    background-color: rgba(0, 0, 0, 0.2);
+}
+/* Main Content */
+.content {
+    margin-top: var(--navbar-height);
+    padding: 20px;
+    transition: margin-left 0.3s ease-in-out; /* Transition effect for content shift */
+}
+
+/* Responsive Behavior */
+@media (max-width: 768px) {
+    .navbar {
+        display: none; /* Hide navbar on smaller screens */
+    }
+
+    .sidebar-toggle {
+        display: block; /* Show sidebar toggle button on small screens */
+    }
+}
+
+/* Full-Screen Mode - Hide Sidebar and Hamburger Menu */
+@media (min-width: 768px) {
+    .sidebar {
+        display: none; /* Hide sidebar on larger screens */
+    }
+
+    .sidebar-toggle {
+        display: none; /* Hide the hamburger menu on larger screens */
+    }
+}

@@ -2,7 +2,10 @@
     --nav-title-font-size: 2rem;
     --nav-link-font-weight: 50;
 }
-
+body{
+    margin:0;
+    padding:0;
+}
 
 .header-title {
     color: var(--color-text-light);
@@ -16,8 +19,16 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    position:fixed;
+    top:0;
+    z-index:1000;
+    padding:10px 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Shadow for better visibility */
+    background-color: #00bcd4; /* Vibrant cyan */
 
+    
 }
+
 
 .header-nav ul{
     display: flex;
@@ -41,5 +52,38 @@
 .header-link {
     font-size:15px;
     font-weight: 3rem;
+    
 
+}
+@media (max-width: 768px) {
+    .header-nav {
+        display: none; /* Hide the navbar */
+    }
+    .sidebar {
+        display: block; /* Show the sidebar */
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 250px; /* Adjust width as needed */
+        background-color: #00bcd4; /* Same as navbar color */
+        box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+        transform: translateX(-100%); /* Hide sidebar by default */
+    }
+    .sidebar.open {
+        transform: translateX(0); /* Show sidebar */
+    }
+    .sidebar-toggle {
+        display: block; /* Show the toggle button */
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        background-color: #00bcd4;
+        padding: 10px;
+        color: #fff;
+        border: none;
+        font-size: 24px;
+        z-index: 1001; /* Above sidebar */
+    }
 }

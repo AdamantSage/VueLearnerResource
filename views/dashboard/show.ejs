@@ -2,11 +2,31 @@
 <h2 class="page-header"> <%= video.title %></h2>
 
 <div class="video-container">
-    <iframe width="560" height="315" 
-        src="https://www.youtube.com/embed/<%= video.link.split('v=')[1].split('&')[0] %>" 
-        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen>
-    </iframe>
+    <% if (video.link) {
+        let videoId = null;
+        
+        // Regular YouTube URL (https://www.youtube.com/watch?v=VIDEO_ID)
+        if (video.link.includes('v=')) {
+            videoId = video.link.split('v=')[1]?.split('&')[0];
+        }
+        // Handle shortened YouTube URL (https://youtu.be/VIDEO_ID)
+        else if (video.link.includes('youtu.be/')) {
+            videoId = video.link.split('youtu.be/')[1];
+        }
+        
+        // If videoId is found, embed the video
+        if (videoId) { %>
+            <iframe width="560" height="315" 
+                src="https://www.youtube.com/embed/<%= videoId %>" 
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+        <% } else { %>
+            <p>Invalid YouTube link or video ID not found.</p>
+        <% } 
+    } else { %>
+        <p>Missing YouTube link.</p>
+    <% } %>
 </div>
 
 <script>
@@ -19,8 +39,19 @@
     // Open the modal
     openButton.onclick = function() {
         modal.style.display = "block";
-        // Set the video source dynamically based on the YouTube link
-        videoFrame.src = "https://www.youtube.com/embed/<%= video.link.split('v=')[1].split('&')[0] %>";
+        // Dynamically set the video source based on the YouTube link
+        let videoLink = "<%= video.link %>";
+        let videoId = null;
+
+        if (videoLink.includes('v=')) {
+            videoId = videoLink.split('v=')[1]?.split('&')[0];
+        } else if (videoLink.includes('youtu.be/')) {
+            videoId = videoLink.split('youtu.be/')[1];
+        }
+
+        if (videoId) {
+            videoFrame.src = "https://www.youtube.com/embed/" + videoId;
+        }
     }
 
     // Close the modal
@@ -29,16 +60,16 @@
         videoFrame.src = ""; // Stop the video when the modal is closed
     }
 
-    // Close the modal if user clicks outside of it
+    // Close the modal if the user clicks outside of it
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
-            videoFrame.src = "";
+            videoFrame.src = ""; // Stop the video
         }
     }
 </script>
-<div class="form-row video-buttons">
-<a class="btn btn-primary" href="/dashboard/<%= video.id %>/edit">Edit</a>
-<%- include('../partials/deleteForm', { url: `/dashboard/${video.id}` }) %>
-</div>
 
+<div class="form-row video-buttons">
+    <a class="btn btn-primary" href="/dashboard/<%= video.id %>/edit">Edit</a>
+    <%- include('../partials/deleteForm', { url: `/dashboard/${video.id}` }) %>
+</div>

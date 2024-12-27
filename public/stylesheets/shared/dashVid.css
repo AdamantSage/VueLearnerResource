@@ -1,0 +1,34 @@
+.video-list .video-card .thumbnail{
+    width: 100%;
+    border-radius: .5rem;;
+    aspect-ratio: 16 / 9;
+}
+.video-list .video-card .thumbnail-container{
+    position: relative;
+}
+.video-list .video-card {
+    text-decoration: none;
+    color: var(--color-btn-primary-text);
+}
+
+.title{
+    font-size: 20px;
+}
+.video-list .video-card .title:hover{
+    color: rgb(0, 0, 0);
+    overflow:hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.vid-summary{
+    font-size: 14px;
+}
+
+.video-list{
+    display:grid;
+    gap: 1rem;
+    padding: 1.25rem 0 4rem;
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+}

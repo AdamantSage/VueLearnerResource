@@ -3,6 +3,9 @@
 @import 'shared/header.css';
 @import 'shared/buttons.css';
 @import 'shared/form.css';
+@import 'shared/dashVid.css';
+@import 'shared/sidebar.css';
+
 
 :root {
     font-family: 'Gotham Rounded';

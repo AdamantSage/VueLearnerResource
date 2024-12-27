@@ -4,7 +4,9 @@
     --form-input-background-color:hsl(var(--color-base-hue),100%, 100%);
     --form-input-border-color-mid:hsl(var(--color-base-hue),100%, 80%);
 }
-
+body{
+    margin-top:60px;
+}
 
 .form-row {
     display:flex;
