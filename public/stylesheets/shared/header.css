@@ -7,13 +7,6 @@ body{
     padding:0;
 }
 
-.header-title {
-    color: var(--color-text-light);
-    text-decoration: none;
-    font-size: var(--nav-title-font-size);
-    font-weight: var(--nav-title-font-weight);
-}
-
 .header-nav {
     display: flex;
     flex-wrap: wrap;
@@ -40,7 +33,7 @@ body{
 }
 .header-nav li a{
     text-decoration: none;
-    color: var(--color-text-light);
+    /*color: var(--color-text-light);*/
     font-weight: var(--nav-title-font-weight);
     padding: 1rem;
 }
@@ -52,9 +45,10 @@ body{
 .header-link {
     font-size:15px;
     font-weight: 3rem;
-    
 
 }
+
+
 @media (max-width: 768px) {
     .header-nav {
         display: none; /* Hide the navbar */

@@ -5,12 +5,13 @@
 @import 'shared/form.css';
 @import 'shared/dashVid.css';
 @import 'shared/sidebar.css';
+@import 'shared/flow.css';
 
 
 :root {
     font-family: 'Gotham Rounded';
     font-size: 20px;
-    color: var(--color-text-light);
+    color: black;
 }
 
 *, *::before, *::after {

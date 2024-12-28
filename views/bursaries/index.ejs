@@ -5,7 +5,7 @@
         <div class="form-item">
             <h2 class="page-header">Search Bursaries</h2>
             <label>Title</label>
-            <input type="text" name="title" value="<%= searchOptions.title || '' %>">
+            <input type="text" name="title" value="<%= searchOptions.title || '' %>" placeholder="Search by title">
         </div>
     </div>
     <div class="form-row">
@@ -14,37 +14,59 @@
 </form>
 
 <br>
-<!-- Display all bursaries -->
-<div>
-    <% bursaries.forEach(bursary=> { %>
-        <div class="bursary-card">
-            <h3>
-                <%= bursary.title || 'Untitled Bursary' %>
-            </h3>
-            <% if (bursary.coverImageData) { %>
-                <img src="data:<%= bursary.contentType %>;base64,<%= bursary.coverImageData %>"
-                    alt="<%= bursary.title %>" height="150" width="150">
-                <% } else { %>
+<!-- Display all bursaries inside an unordered list -->
+<ul class="workspace-list">
+    <% bursaries.forEach((bursary, index) => { %>
+        <li class="workspace-item" data-index="<%= index %>">
+            <div class="bursary-card">
+                <h3>
+                    <%= bursary.title || 'Untitled Bursary' %>
+                </h3>
+                
+                <% if (bursary.coverImageData) { %>
+                    <img src="data:<%= bursary.contentType %>;base64,<%= bursary.coverImageData %>"
+                        alt="<%= bursary.title %>" height="150" width="150">
+                    <% } else { %>
                     <p>No cover image available</p>
-                    <% } %>
-                        <p>Description: <%= bursary.description || 'No description available' %>
-                        </p>
-                        <p>Link:
-                            <% if (bursary.link) { %>
-                                <a href="<%= bursary.link %>" target="_blank">
-                                    <%= bursary.link %>
-                                </a>
-                                <% } else { %>
-                                    No link provided
-                                    <% } %>
-                        </p>
-                        <div class="form-row form-row-end btn-row">
-                            <a class="btn btn-primary" href="/bursaries/<%= bursary.id %>/edit">Edit</a>
-                            <%- include('../partials/deleteForm', {url: `/bursaries/${bursary.id}`}) %>
-                        </div>
-                        </div>
+                <% } %>
 
-        </div>
-        <br>
-        <% }) %>
-</div>
+                <p>Description: <%= bursary.description || 'No description available' %></p>
+                <p>Link:
+                    <% if (bursary.link) { %>
+                        <a href="<%= bursary.link %>" target="_blank">
+                            <%= bursary.link %>
+                        </a>
+                    <% } else { %>
+                        No link provided
+                    <% } %>
+                </p>
+                
+                <div class="form-row form-row-end btn-row">
+                    <a class="btn btn-primary" href="/bursaries/<%= bursary.id %>/edit">Edit</a>
+                    <%- include('../partials/deleteForm', {url: `/bursaries/${bursary.id}`}) %>
+                </div>
+            </div>
+        </li>
+    <% }) %>
+</ul>
+
+
+
+
+<script>
+   document.addEventListener("DOMContentLoaded", function() {
+    // Get all the workspace items
+    const workspaceItems = document.querySelectorAll('.workspace-item');
+    
+    // Loop through each workspace item and adjust the 'top' based on its index
+    workspaceItems.forEach((item, index) => {
+        // Set the top position dynamically
+        item.style.top = `${index * 10}px`; // 10px increment for each item
+    });
+});
+
+</script>
+
+
+
+

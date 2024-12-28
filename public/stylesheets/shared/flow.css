@@ -1,0 +1,33 @@
+.workspace-list{
+    overflow-y: scroll;
+    height: 500px;
+    width:900px;
+    list-style-type: none;
+    margin: 0 auto;
+    
+
+}
+
+.workspace-item{
+    border: 10px soild #ddd;
+    margin-bottom: 20px;
+    font-size: .6rem;
+    position:sticky;
+    top:0px;
+    background-color: #fff;
+    box-shadow: -2px 5px 10px #333;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+
+}
+
+.workspace-item:nth-child(2){
+    top: 10px;
+}
+.workspace-item:nth-child(3){
+    top: 20px;
+}
+.workspace-item:nth-child(4){
+    top: 30px;
+}

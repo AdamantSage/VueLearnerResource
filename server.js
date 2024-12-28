@@ -17,7 +17,8 @@ app.set('layout', 'layouts/layout'); // Layout file
 app.use(methodOverride('_method'));
 app.use(expressLayouts);
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({limit: '10mb', extended: false }))
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true }))
+app.use(bodyParser.json({ limit: '10mb' }));
 
 
 // Routes
