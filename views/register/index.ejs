@@ -1,0 +1,31 @@
+<h2 class="page-header">Register User</h2>
+
+<form action="/register" method="POST">
+    <div class="form-row">
+        <div class="form-item">
+            <label>Email</label>
+            <input type="email" name="email" required>
+            <br>
+            <br>
+        
+
+            <label>Password</label>
+            <input type="password" name="password" required>
+            <br>
+
+            <label>Confirm Password</label>
+            <input type="password" name="passwordConfirm" required>
+            <br>
+
+            <label for="role">Role</label>
+            <select name="role" id="role">
+                <option value="Admin">Admin</option>
+                <option value="Contributor">Contributor</option>
+            </select>
+            <br>
+
+        <div>
+            <button class="btn btn-primary" type="submit">Register</button>
+        </div>
+    </div>
+</form>

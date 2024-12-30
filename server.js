@@ -8,6 +8,10 @@ const dashRouter = require('./routes/dashboard');
 const bodyParser = require('body-parser');
 const bursRouter = require('./routes/bursaries');
 const docRouter = require('./routes/documents');
+const registerRouter = require('./routes/register');
+const loginRouter = require('./routes/login');
+
+ // Assuming you have a separate file for the register routes
 const methodOverride = require('method-override');
 
 // Set view engine
@@ -26,6 +30,8 @@ app.use('/', indexRouter);
 app.use('/dashboard', dashRouter); // Dashboard route
 app.use('/bursaries', bursRouter);
 app.use('/documents', docRouter);
+app.use('/register', registerRouter);
+app.use('/login', loginRouter);
 // Test DB connection
 const testDBConnection = async () => {
     try {
