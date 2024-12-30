@@ -3,12 +3,32 @@ const router = express.Router();
 const promisePool = require("../models/db");
 const multer = require('multer');
 const path =require('path');
-const upload = multer({ dest: 'public/uploads/' }); // Configure where to save the image
-const imageMimeTypes =['image/jpeg','image/png','image/gif']
 const fs = require('fs');
-
 const { promisify } = require('util');
 const {findBursById} = require('../models/bursaryModel');
+
+const imageMimeTypes =['image/jpeg','image/png','image/gif']
+
+const upload = multer({
+    dest: 'public/uploads/',  // Configure where to save the image
+    limits: {
+        fileSize: 10 * 1024 * 1024,  // Max file size 5MB
+        fieldSize: 15 * 1024 * 1024  // Increase field size limit if needed
+    },
+    fileFilter: (req, file, cb) => {
+        if (imageMimeTypes.includes(file.mimetype)) {
+            cb(null, true); // Accept file
+        } else {
+            cb(new Error('Invalid file type. Only JPEG, PNG, and GIF are allowed.'));
+        }
+    },
+    filename: (req, file, cb) => {
+        const extension = path.extname(file.originalname);  // Get the file extension
+        const baseName = file.originalname.slice(0, 40);  // Limit the file name to 40 characters
+        const newFileName = baseName + Date.now() + extension;  // Append timestamp to ensure uniqueness
+        cb(null, newFileName);  // Provide the new file name
+    }
+});
 
 // Create a promisified version of fs.readFile
 const readFileAsync = promisify(fs.readFile);
@@ -80,6 +100,9 @@ router.get('/new', async (req, res) => {
 });
 
 router.post('/', upload.single('cover'), async (req, res) => {
+    console.log('Form data:', req.body);
+    console.log('Uploaded file:', req.file);
+
     try {
         const { title, description, link } = req.body;
 
@@ -112,6 +135,7 @@ router.post('/', upload.single('cover'), async (req, res) => {
         res.status(500).send('Error inserting into bursaries');
     }
 });
+
 
 
 //getting bursary by id for editing

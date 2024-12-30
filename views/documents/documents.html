@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Document</title>
+    <link rel="stylesheet" href="/public/stylesheets/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.18.10/babel.min.js"></script>
+</head>
+
+<body>
+
+    <div id="root"></div> <!-- The div where React will mount -->
+
+    <script type="text/babel">
+        // Your JSX code here
+        const { useState } = React; // Import useState from React
+
+        function DocumentForm() {
+            // State variables for title, selected option, and date
+            const [title, setTitle] = useState("");
+            const [selectedOption, setSelectedOption] = useState("");
+            const [dateAdded, setDateAdded] = useState("");
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                console.log("Title:", title);
+                console.log("Document Type:", selectedOption);
+                console.log("Date Added:", dateAdded);
+            };
+
+            return (
+                <div>
+                    <h1>Add Document</h1>
+                    <form onSubmit={handleSubmit}>
+                        <div>
+                            <label htmlFor="title">Title</label>
+                            <input
+                                type="text"
+                                id="title"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                placeholder="Enter Document name"
+                                required
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="select">Type</label>
+                            <select
+                                id="select"
+                                value={selectedOption}
+                                onChange={(e) => setSelectedOption(e.target.value)}
+                            >
+                                <option value="" disabled>Select your choice</option>
+                                <option value="Document">Document</option>
+                                <option value="Image">Image</option>
+                                <option value="PDF">PDF</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label htmlFor="dateAdded">Date Added</label>
+                            <input
+                                type="date"
+                                id="dateAdded"
+                                value={dateAdded}
+                                onChange={(e) => setDateAdded(e.target.value)}
+                                required
+                            />
+                        </div>
+
+                        <div>
+                            <button type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            );
+        }
+
+        // Render the DocumentForm component inside the 'root' div
+        ReactDOM.render(<DocumentForm />, document.getElementById("root"));
+    </script>
+
+</body>
+
+</html>

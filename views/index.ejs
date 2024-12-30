@@ -1,8 +1,66 @@
-<h2 class="page-header">Latest Resources</h2>
+<body class="page-background">
+    <div class="wrapper">
+        <div class="card">
+            <img src="/images/bgImg1.jpg"></img>
+            <div class="info">
+                <h1> Welcome to VueLearnerResources (VLR)</h1>
+                <p>Whether you're just starting out or looking to level up your skills, we're here to guide you every
+                    step of
+                    the way. Our platform provides a curated collection of beginner-friendly resources to help you learn
+                    coding
+                    at your own pace. Explore tutorials, articles, videos, and more, all designed to make your learning
+                    experience enjoyable and effective.
+                    Start your journey today, and discover the resources that are perfect for you! Happy coding!</p>
+            </div>
+        </div>
+    </div>
+
+
+    <h2 class="page-header">Latest Resources</h2>
     <ul>
-        <% resources.forEach(resource => { %>
+        <% resources.forEach(resource=> { %>
             <li>
-                <a href="<%= resource.link %>"><%= resource.title %></a>
+                <a href="<%= resource.link %>">
+                    <%= resource.title %>
+                </a>
             </li>
-        <% }) %>
-        </ul>
+            <% }) %>
+    </ul>
+
+
+
+
+
+
+</body>
+
+<!--<body class="page-background">
+    <div class="card">
+    <div class="vlrText">
+        <h1> Welcome to VueLearnerResources (VLR)</h1>
+        <p>Whether you're just starting out or looking to level up your skills, we're here to guide you every step of
+            the way. Our platform provides a curated collection of beginner-friendly resources to help you learn coding
+            at your own pace. Explore tutorials, articles, videos, and more, all designed to make your learning
+            experience enjoyable and effective.
+            Start your journey today, and discover the resources that are perfect for you! Happy coding!</p>
+    </div>
+</div>
+
+
+    <h2 class="page-header">Latest Resources</h2>
+    <ul>
+        <% resources.forEach(resource=> { %>
+            <li>
+                <a href="<%= resource.link %>">
+                    <%= resource.title %>
+                </a>
+            </li>
+            <% }) %>
+    </ul>
+
+
+
+
+
+
+</body>-->

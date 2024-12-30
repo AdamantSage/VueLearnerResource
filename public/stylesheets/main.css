@@ -6,6 +6,7 @@
 @import 'shared/dashVid.css';
 @import 'shared/sidebar.css';
 @import 'shared/flow.css';
+@import 'shared/bgImages.css';
 
 
 :root {
@@ -37,3 +38,4 @@ body {
     font-size: 2rem;
     font-weight:500;
 }
+

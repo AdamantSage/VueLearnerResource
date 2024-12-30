@@ -7,8 +7,8 @@ const indexRouter = require('./routes/index');
 const dashRouter = require('./routes/dashboard');
 const bodyParser = require('body-parser');
 const bursRouter = require('./routes/bursaries');
+const docRouter = require('./routes/documents');
 const methodOverride = require('method-override');
-
 
 // Set view engine
 app.set('view engine', 'ejs');
@@ -25,7 +25,7 @@ app.use(bodyParser.json({ limit: '10mb' }));
 app.use('/', indexRouter);
 app.use('/dashboard', dashRouter); // Dashboard route
 app.use('/bursaries', bursRouter);
-
+app.use('/documents', docRouter);
 // Test DB connection
 const testDBConnection = async () => {
     try {

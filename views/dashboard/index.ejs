@@ -180,3 +180,26 @@ looping through all resources/videos here
                         </div>
                     </a>
         </div>
+
+        <script>
+// Create an Intersection Observer
+//it allowa monitoringof an element. the show and leave effect in the page
+const observer = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible'); 
+    } else {
+      entry.target.classList.remove('is-visible'); 
+    }
+  });
+}, {
+  threshold: 0.2, //how much must an element be visible to trigger callback function 
+  rootMargin: '0px', 
+});
+
+// Observe each video card
+document.querySelectorAll('.video-card').forEach(card => {
+  observer.observe(card);
+});
+
+</script>

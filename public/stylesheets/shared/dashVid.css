@@ -33,3 +33,36 @@
     grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
 }
 
+/* Define the slide-in animation */
+@keyframes slideIn {
+    from {
+      transform: translateY(50px); /* Start from below the screen */
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Initially hide the elements off-screen */
+  .video-card {
+    opacity: 0;
+    transform: translateY(50px); /* Position them below the screen */
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+  }
+  
+ /*a class to trigger the animation*/
+  .video-card.is-visible {
+    opacity: 1;
+    transform: translateY(0); /* Bring them into the viewport */
+  }
+  
+  .video-card:nth-child(odd) {
+    animation-delay: 0.2s;
+  }
+  
+  .video-card:nth-child(even) {
+    animation-delay: 0.4s;
+  }
+  
