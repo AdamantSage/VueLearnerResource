@@ -10,8 +10,9 @@ const bursRouter = require('./routes/bursaries');
 const docRouter = require('./routes/documents');
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
-
- // Assuming you have a separate file for the register routes
+const logoutRouter = require('./routes/logout');
+//session to identify diff type of users and what they see
+const session = require('express-session');
 const methodOverride = require('method-override');
 
 // Set view engine
@@ -21,9 +22,21 @@ app.set('layout', 'layouts/layout'); // Layout file
 app.use(methodOverride('_method'));
 app.use(expressLayouts);
 app.use(express.static('public'));
+
+app.use(session({
+    secret: 'secret-key',
+    resave: false,            
+    saveUninitialized: true,   
+    cookie: { secure: false }  
+}));
 app.use(bodyParser.urlencoded({limit: '10mb', extended: true }))
 app.use(bodyParser.json({ limit: '10mb' }));
 
+//passing user role globally
+app.use((req,res,next) =>{
+    res.locals.userRole = req.user ? req.user.role : null;
+    next();
+});
 
 // Routes
 app.use('/', indexRouter);
@@ -32,6 +45,7 @@ app.use('/bursaries', bursRouter);
 app.use('/documents', docRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
 // Test DB connection
 const testDBConnection = async () => {
     try {

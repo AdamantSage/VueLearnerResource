@@ -71,7 +71,7 @@ router.get('/', async (req, res) => {
 
         res.render('bursaries', { 
             bursaries: bursariesWithImageData, 
-            searchOptions: req.query 
+            searchOptions: req.query
         });
     } catch (err) {
         console.error("Error fetching bursaries:", err.message);
@@ -147,7 +147,10 @@ router.get('/:id/edit', async (req, res) => {
         const bursary = await findBursById(bursaryId);
         
         if (bursary) {
-            res.render('bursaries/edit', { bursary }); // Pass singular bursary
+            res.render('bursaries/edit', { bursary,
+                userRole: req.session.user ? req.session.user.role : null  // Pass user role
+
+            }); // Pass singular bursary
         } else {
             res.status(404).send('Bursary not found');
         }

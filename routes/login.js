@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 //const checkRole = require('../middleware/role');
 const bcrypt = require('bcrypt');
-const db = require("../models/db");
+const db = require('../models/db'); // Assuming promisePool is your DB connection setup
 
 //to get login index page
 router.get('/', (req,res) =>{
@@ -11,69 +11,40 @@ router.get('/', (req,res) =>{
 
 
 
-router.post('/', (req, res) => {
-    console.log('Login request received');
-    
+router.post('/', async (req, res) => {
     const { email, password } = req.body;
 
-    // Check if email and password are provided
-    if (!email || !password) {
-        console.log('Missing email or password');
-        return res.status(400).json({ message: 'Email and password are required' });
+    try {
+        // Query the database to find the user by email
+        const [rows] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
+
+        if (rows.length === 0) {
+            // User not found
+            return res.status(401).send('Invalid email or password');
+        }
+
+        const user = rows[0];
+
+        // Compare the provided password with the hashed password in the database
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (passwordMatch) {
+            
+            req.session.user ={
+                id:user.id,
+                email:user.email,
+                role: user.role
+            };
+            return res.redirect('/dashboard'); // Redirect to the dashboard or another page
+        } else {
+            // Invalid password
+            return res.status(401).send('Invalid email or password');
+        }
+    } catch (error) {
+        console.error('Login error:', error);
+        return res.status(500).send('Internal server error');
     }
-
-    // Query to find the user by email
-    db.query('SELECT * FROM users WHERE email = ?', [email], (error, results) => {
-        if (error) {
-            console.log('Database error:', error);
-            return res.status(500).send('Server error');
-        }
-
-        if (results.length === 0) {
-            console.log('No user found with that email');
-            return res.status(401).json({ message: 'Invalid credentials' });
-        }
-
-        const user = results[0];
-        console.log('User found:', user.email);
-
-        // Compare the provided password with the stored hashed password
-        bcrypt.compare(password, user.password, (err, isMatch) => {
-            if (err) {
-                console.error('Bcrypt comparison error:', err);
-                return res.status(500).send('Server error');
-            }
-
-            if (isMatch) {
-                console.log('Password match');
-                
-                // Generate JWT with user_id included in the payload
-                const token = jwt.sign(
-                    { id: user.user_id, email: user.email, role: user.role }, 
-                    process.env.JWT_SECRET,
-                    { expiresIn: '1h' }
-                );
-
-                // Log the token to the console
-                console.log('Generated JWT:', token);
-
-                // Set the JWT token as a cookie or return it in the response as needed
-                res.cookie('token', token, { httpOnly: true, secure: false }); // Set a cookie with JWT (if desired)
-
-                // Emit notification for successful login
-                emitNotification('user_logged_in', { email: user.email, role: user.role });
-
-                // Redirect the user to the dashboard
-                return res.redirect('/dashboard');
-            } else {
-                console.log('Password mismatch');
-                return res.status(401).json({ message: 'Invalid credentials' });
-            }
-        });
-    });
 });
-
-
 /*
 router.get('/dashboard', authenticateToken, checkRole(['admin', 'lecturer', 'student']), (req, res) => {
     if (req.user.role === 'admin') {

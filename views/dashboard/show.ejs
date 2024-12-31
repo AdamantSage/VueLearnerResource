@@ -70,6 +70,11 @@
 </script>
 
 <div class="form-row video-buttons">
-    <a class="btn btn-primary" href="/dashboard/<%= video.id %>/edit">Edit</a>
-    <%- include('../partials/deleteForm', { url: `/dashboard/${video.id}` }) %>
+    <% if (userRole === 'Admin') { %>
+        <!-- Show the edit and delete buttons only for admin role -->
+        <a class="btn btn-primary" href="/dashboard/<%= video.id %>/edit">Edit</a>
+        <form action="/dashboard/<%= video.id %>?_method=DELETE" method="POST">
+            <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+    <% } %>
 </div>

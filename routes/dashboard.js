@@ -7,6 +7,9 @@ const {findVidById} = require('../models/vidModel');
 //get all info on dashboard/video
 router.get('/', async (req,res) => {
 
+    const userRole = req.user ? req.user.role : null;  // Adjust this to match your authentication logic
+
+
     let searchOptions = "SELECT * FROM resources";
     let queryParam =[];
 
@@ -49,7 +52,7 @@ router.post('/', async (req, res) =>{
     console.log(req.body);  // This will show the form data being sent to the server
 
     let { title, type, link, created_at } = req.body;
-    const uploaded_by ="1"; // Assuming the user's ID is stored in session
+    const uploaded_by = req.session.user ? req.session.user.id : 1;
 
     // Set 'created_at' to NULL if it's not provided
     if (!created_at) {
@@ -137,7 +140,9 @@ router.get('/:id', async (req,res) =>{
         const video = await findVidById(videoId);
 
         if(video){
-            res.render('dashboard/show', { video});
+            res.render('dashboard/show', { video,
+                userRole: req.session.user ? req.session.user.role : null
+            });
         }
         else{
             res.status(404).send('Video not found');

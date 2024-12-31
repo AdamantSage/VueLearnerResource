@@ -10,70 +10,31 @@ router.get('/', (req,res) =>{
 });
 
 
-router.post('/', (req, res) => {
-    console.log('Login request received');
-    
-    const { email, password } = req.body;
+router.post('/', async (req, res) => {
+    console.log('Request body:', req.body);
 
-    // Check if email and password are provided
-    if (!email || !password) {
-        console.log('Missing email or password');
-        return res.status(400).json({ message: 'Email and password are required' });
+    const { email, role, password, passwordConfirm } = req.body;
+
+    if (password !== passwordConfirm) {
+        return res.status(400).send('Passwords do not match');
     }
 
-    // Query to find the user by email
-    db.query('SELECT * FROM users WHERE email = ?', [email], (error, results) => {
-        if (error) {
-            console.log('Database error:', error);
-            return res.status(500).send('Server error');
-        }
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        console.log('Hashed Password:', hashedPassword);
 
-        if (results.length === 0) {
-            console.log('No user found with that email');
-            return res.status(401).json({ message: 'Invalid credentials' });
-        }
-
-        const user = results[0];
-        console.log('User found:', user.email);
-
-        // Compare the provided password with the stored hashed password
-        bcrypt.compare(password, user.password, (err, isMatch) => {
-            if (err) {
-                console.error('Bcrypt comparison error:', err);
-                return res.status(500).send('Server error');
-            }
-
-            console.log('Bcrypt comparison result:', isMatch); // Log the result of comparison
-
-            if (isMatch) {
-                console.log('Password match');
-
-                // Generate JWT with user_id included in the payload
-                const token = jwt.sign(
-                    { id: user.user_id, email: user.email, role: user.role }, 
-                    process.env.JWT_SECRET,
-                    { expiresIn: '1h' }
-                );
-
-                // Log the token to the console
-                console.log('Generated JWT:', token);
-
-                // Set the JWT token as a cookie or return it in the response as needed
-                res.cookie('token', token, { httpOnly: true, secure: false }); // Set a cookie with JWT (if desired)
-
-                // Emit notification for successful login
-                emitNotification('user_logged_in', { email: user.email, role: user.role });
-
-                // Redirect the user to the dashboard
-                return res.redirect('/dashboard');
-            } else {
-                console.log('Password mismatch');
-                return res.status(401).json({ message: 'Invalid credentials' });
-            }
-        });
-    });
+        await db.query(
+            'INSERT INTO users (email, role, password) VALUES (?, ?, ?)',
+            [email, role, hashedPassword]
+        );
+        res.redirect('/login');
+    } catch (error) {
+        console.error('Error registering user:', error.message);
+        res.status(500).send('Error registering user');
+    }
 });
 
+module.exports = router;
 
 
 /*

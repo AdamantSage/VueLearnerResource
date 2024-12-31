@@ -5,11 +5,15 @@
             <li class="header-link"><a href="/login">Login</a></li>
             <li class="header-link"><a href="/register">Register</a></li>
             <li class="header-link"><a href="/dashboard">Dashboard</a></li>
-            <li class="header-link"><a href="/dashboard/new">Upload Video</a></li>
+            <% if (userRole === 'Admin') { %>
+                <li class="header-link"><a href="/dashboard/new">Upload Video</a></li>
+            <% } %>            
             <li class="header-link"><a href="/bursaries">Bursaries</a></li>
-            <li class="header-link"><a href="/bursaries/new">Upload Bursaries</a></li>
-            <!-- <li class="header-link"><a href="/resourceShare">Share Resources</a></li> -->
-        </ul>
+            <% if (userRole === 'Admin') { %>
+                <li><a href="/bursaries/new">Upload Bursaries</a></li>
+                <% } %>
+            <br>
+       <!-- <button class="btn btn-danger" id="logoutButton">Logout</button>-->
     </nav>
 </header>
 
@@ -20,11 +24,17 @@
         <li><a href="/login">Login</a></li>
         <li><a href="/register">Register</a></li>
         <li><a href="/dashboard">Dashboard</a></li>
-        <li><a href="/dashboard/new">Upload Video</a></li>
+        <% if (userRole === 'Admin') { %>
+            <li class="header-link"><a href="/dashboard/new">Upload Video</a></li>
+        <% } %>
         <li><a href="/bursaries">Bursaries</a></li>
+        
+        <% if (userRole === 'Admin') { %>
         <li><a href="/bursaries/new">Upload Bursaries</a></li>
-       <!-- <li><a href="/resourceShare">Share Resources</a></li> -->
-    </ul>
+        <% } %>
+        <br>
+       <!-- <button class="btn btn-danger" id="logoutButton">Logout</button>-->
+       </ul>
 </div>
 
 <!-- Sidebar Toggle Button -->
@@ -53,4 +63,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+
+document.getElementById('logoutButton').addEventListener('click', function() {
+    localStorage.removeItem('jwtToken');
+
+    window.location.href('/login');
+});
+
 </script>

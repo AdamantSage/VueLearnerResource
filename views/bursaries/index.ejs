@@ -42,8 +42,11 @@
                 </p>
                 
                 <div class="form-row form-row-end btn-row">
-                    <a class="btn btn-primary" href="/bursaries/<%= bursary.id %>/edit">Edit</a>
-                    <%- include('../partials/deleteForm', {url: `/bursaries/${bursary.id}`}) %>
+                    <% if (userRole ==='Admin') {%>
+                        <a class="btn btn-primary" href="/bursaries/<%= bursary.id %>/edit">Edit</a>
+                        <form action="/bursaries/<%= bursary.id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger" type="submit">Delete</button>    <% } %>
+                        </form>
                 </div>
             </div>
         </li>
