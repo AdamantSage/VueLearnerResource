@@ -33,10 +33,16 @@ app.use(bodyParser.urlencoded({limit: '10mb', extended: true }))
 app.use(bodyParser.json({ limit: '10mb' }));
 
 //passing user role globally
-app.use((req,res,next) =>{
-    res.locals.userRole = req.user ? req.user.role : null;
+// Middleware to make user role globally available in views
+app.use((req, res, next) => {
+    if (req.session.user) {
+        res.locals.userRole = req.session.user.role; // Set the role if the user is logged in
+    } else {
+        res.locals.userRole = null; // If no user is logged in, set it to null
+    }
     next();
 });
+
 
 // Routes
 app.use('/', indexRouter);

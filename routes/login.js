@@ -11,6 +11,7 @@ router.get('/', (req,res) =>{
 
 
 
+// Inside the login route
 router.post('/', async (req, res) => {
     const { email, password } = req.body;
 
@@ -29,13 +30,14 @@ router.post('/', async (req, res) => {
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if (passwordMatch) {
-            
-            req.session.user ={
-                id:user.id,
-                email:user.email,
+            // Set the user session
+            req.session.user = {
+                id: user.id,
+                email: user.email,
                 role: user.role
             };
-            return res.redirect('/dashboard'); // Redirect to the dashboard or another page
+            // Redirect to dashboard or another page
+            return res.redirect('/dashboard');
         } else {
             // Invalid password
             return res.status(401).send('Invalid email or password');
@@ -45,6 +47,7 @@ router.post('/', async (req, res) => {
         return res.status(500).send('Internal server error');
     }
 });
+
 /*
 router.get('/dashboard', authenticateToken, checkRole(['admin', 'lecturer', 'student']), (req, res) => {
     if (req.user.role === 'admin') {
