@@ -203,3 +203,15 @@ document.querySelectorAll('.video-card').forEach(card => {
 });
 
 </script>
+
+<script src="/popup.js"></script>
+
+
+<!-- If there's an error, trigger the popup -->
+<% if (typeof error !== "undefined") { %>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        showPopup("<%= error %>");
+      });
+    </script>
+  <% } %>

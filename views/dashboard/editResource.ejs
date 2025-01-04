@@ -1,4 +1,4 @@
-<form action="/dashboard/<%= resource.id %>/edit" method="POST">
+<form action="/dashboard/<%= resource.id %>/edit" method="POST" onsubmit="return confirmUpdate()">
     <input type="hidden" name="_method" value="PUT">
     <div class="form-item">
         <label>Title</label>
@@ -33,3 +33,5 @@
         </div>
 
 </form>
+
+<script src="/UpdateConfirm.js"></script>

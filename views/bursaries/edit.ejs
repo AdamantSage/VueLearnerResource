@@ -1,5 +1,5 @@
 <h2 class="page-header">Edit Bursary</h2>
-<form action="/bursaries/<%= bursary.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+<form action="/bursaries/<%= bursary.id %>?_method=PUT" method="POST" enctype="multipart/form-data" onsubmit="return confirmUpdate()">
 
 <%- include('form_fields') %>
 
@@ -12,3 +12,5 @@
 
  
 </form>
+
+<script src="/UpdateConfirm.js"></script>

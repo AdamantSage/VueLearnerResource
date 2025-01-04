@@ -1,3 +1,10 @@
+<div id="popup" class="popup hidden">
+    <div class="popup-content">
+      <span id="popup-message"></span>
+      <button id="popup-close">Close</button>
+    </div>
+  </div>
+
 <h2 class="page-header">Login</h2>
 
 <form action="/login" method="POST">
@@ -16,3 +23,17 @@
         </div>
     </div>
 </form>
+
+<script src="/popup.js"></script>
+
+
+<!-- If there's an error, trigger the popup -->
+<% if (typeof error !== "undefined") { %>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        showPopup("<%= error %>");
+      });
+    </script>
+  <% } %>
+  
+  

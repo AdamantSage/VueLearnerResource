@@ -7,9 +7,6 @@ const {findVidById} = require('../models/vidModel');
 //get all info on dashboard/video
 router.get('/', async (req,res) => {
 
-    const userRole = req.user ? req.user.role : null;  // Adjust this to match your authentication logic
-
-
     let searchOptions = "SELECT * FROM resources";
     let queryParam =[];
 
@@ -27,8 +24,7 @@ router.get('/', async (req,res) => {
    }catch(err){
     console.error("Error fetching resources: ", err.message);
     if(!res.headersSent){
-        res.status(500).send('Error fetching resources');
-        res.redirect('/');
+        return res.render("/", { error: "error inserting resources!" });
     }
     
    }
@@ -43,7 +39,7 @@ router.get('/new', async (req, res) => {
         res.render('dashboard/new', { resources: resources }); // Pass resources to the view
     } catch (err) {
         console.error("Error fetching resources: ", err.message);
-        res.status(500).send('Error fetching resources');
+        return res.render("/new", { error: "error fetching resources!" });
     }
 });
 
@@ -60,7 +56,7 @@ router.post('/', async (req, res) =>{
     }
     // Ensure that all required fields have values
     if (!title || !type || !link || !uploaded_by) {
-        return res.status(400).send("Missing required fields");
+        return res.render("/", { error: "Missing fields required" });
     } 
     const query ='INSERT INTO resources (title,type,link,uploaded_by,created_at) VALUES(?,?,?,?,?)';
 
@@ -71,7 +67,7 @@ router.post('/', async (req, res) =>{
     }
     catch(err){
         console.error("Error inserting reosurces: ", err.message);
-        res.status(500).send('Error inserting resources');
+        return res.render("/dashboard", { error: "error fetching resources!" });
        }
 })
 
@@ -84,14 +80,14 @@ router.get('/:id/edit', async (req, res) => {
         const [resource] = await promisePool.execute('SELECT * FROM resources WHERE id = ?', [resourceID]);
 
         if(resource.length ===0){
-            return res.status(404).send('Resource not found');
+            return res.render("/:id/edit", { error: "Resource not found!" });
         }
 
         res.render('./dashboard/editResource', {resource:resource[0]});
     }catch(err){
         console.error("Error updating resources: ", err.message);
-        res.status(500).send('Error updating resources');
-       }
+        return res.render("/:id/edit", { error: "error updating resources!" });
+    }
 
 });
 
@@ -105,7 +101,7 @@ router.put('/:id/edit', async (req, res) => {
         // Get current resource from the database using the findVidById function
         const existingResource = await findVidById(resourceID);
         if (!existingResource) {
-            return res.status(404).send('Resource not found');
+            return res.render("/:id/edit", { error: "Resource not found!" });
         }
 
         // Use existing values if no new value is provided
@@ -125,7 +121,7 @@ router.put('/:id/edit', async (req, res) => {
         res.redirect('/dashboard'); // Redirect to the dashboard after editing
     } catch (err) {
         console.error('Error updating resource:', err.message);
-        res.status(500).send('Error updating resource');
+        return res.render("/:id/edit", { error: "error updating resources!" });
     }
 });
 
@@ -145,13 +141,13 @@ router.get('/:id', async (req,res) =>{
             });
         }
         else{
-            res.status(404).send('Video not found');
+            return res.render("dashboard/show", { error: "Video not found" });
         }
 
 
     }catch (err) {
         console.error("Error fetching resources/video: ", err.message);
-        res.status(500).send('Error fetching resources/video');
+        return res.render("dashboard/show", { error: "error fetching video" });
     }
 
 });
@@ -167,7 +163,7 @@ router.delete('/:id', async (req, res) => {
         const [rows] = await promisePool.execute('SELECT * FROM resources WHERE id = ?', [videoId]);
         
         if (rows.length === 0) {
-            return res.status(404).send('video not found');
+            return res.render("dashboard/show", { error: "Video not found" });
         }
 
         // Delete the bursary
@@ -177,7 +173,7 @@ router.delete('/:id', async (req, res) => {
 
     } catch (err) {
         console.error("Error deleting video:", err.message);
-        res.status(500).send('Error deleting video');
+        return res.render("dashboard/show", { error: "error deleting video" });
     }
 });
 

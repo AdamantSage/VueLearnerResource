@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
 
         if (rows.length === 0) {
             // User not found
-            return res.status(401).send('Invalid email or password');
+            return res.render("login", { error: "Invalid email or password!" });
         }
 
         const user = rows[0];
@@ -40,7 +40,7 @@ router.post('/', async (req, res) => {
             return res.redirect('/dashboard');
         } else {
             // Invalid password
-            return res.status(401).send('Invalid email or password');
+            return res.render("login", { error: "Invalid email or password!" });
         }
     } catch (error) {
         console.error('Login error:', error);
