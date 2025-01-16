@@ -55,10 +55,10 @@ app.use('/logout', logoutRouter);
 // Test DB connection
 const testDBConnection = async () => {
     try {
-        await promisePool.execute('SELECT 1');
-        console.log('Database connected successfully');
+        const [rows] = await promisePool.query('SELECT 1'); // Use query method here
+        console.log('Database connected successfully:', rows);
     } catch (error) {
-        console.error("Error connecting to the database", error.message);
+        console.error("Error connecting to the database:", error.message);
     }
 };
 
